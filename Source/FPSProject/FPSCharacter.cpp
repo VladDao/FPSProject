@@ -49,6 +49,25 @@ void AFPSCharacter::OnStopJump()
 	bPressedJump = false;
 }
 
+void AFPSCharacter::OnStartJog()
+{
+	  bPressedJog = true;
+}
+void AFPSCharacter::OnStopJog()
+{
+	bPressedJog = false;
+}
+void AFPSCharacter::OnPressedAction()
+{
+	bPressedAction = true;
+}
+void AFPSCharacter::OnReleasedAction()
+{
+	bPressedAction = false;
+}
+
+
+
 // Called to bind functionality to input
 void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -60,7 +79,11 @@ void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	InputComponent->BindAxis("LookUp", this, &AFPSCharacter::AddControllerPitchInput);
 	InputComponent->BindAction("Jump", IE_Pressed, this, &AFPSCharacter::OnStartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &AFPSCharacter::OnStopJump);
-
+	InputComponent->BindAction("Jog", IE_Pressed, this, &AFPSCharacter::OnStartJog);
+	InputComponent->BindAction("Jog", IE_Released, this, &AFPSCharacter::OnStopJog);
+	InputComponent->BindAction("Action / Speak", IE_Pressed, this, &AFPSCharacter::OnPressedAction);
+	InputComponent->BindAction("Action / Speak", IE_Released, this, &AFPSCharacter::OnReleasedAction);
+	
 }
 
 void AFPSCharacter::MoveForward(float Value)
@@ -76,7 +99,14 @@ void AFPSCharacter::MoveForward(float Value)
 		}
 		// add movement in that direction
 		const FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
-		AddMovementInput(Direction, Value);
+		if (bPressedJog == true)
+		{
+			AddMovementInput(Direction, Value);
+		}
+		else {
+			AddMovementInput(Direction, Value * 0.45);
+		
+		}
 	}
 }
 
@@ -88,6 +118,13 @@ void AFPSCharacter::MoveRight(float Value)
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::Y);
 		// add movement in that direction
-		AddMovementInput(Direction, Value);
+		if (bPressedJog == true)
+		{
+			AddMovementInput(Direction, Value);
+		}
+		else {
+			AddMovementInput(Direction, Value * 0.45);
+
+		}
 	}
 }

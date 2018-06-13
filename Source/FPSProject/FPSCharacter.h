@@ -33,6 +33,15 @@ protected:
 	//clears jump flag when key is released
 	UFUNCTION()
 		void OnStopJump();
+	UFUNCTION()
+		void OnStartJog();
+	UFUNCTION()
+		void OnStopJog();
+	UFUNCTION()
+		void OnPressedAction();
+	UFUNCTION()
+		void OnReleasedAction();
+
 
 
 public:
@@ -57,7 +66,11 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 		class UCameraComponent* CameraComp;
-		
+	UPROPERTY(BlueprintReadOnly, Category = Character)
+		bool bPressedJog = false;
+	UPROPERTY(BlueprintReadOnly, Category = Character)
+		bool bPressedAction = false;
+	
 
 	
 
