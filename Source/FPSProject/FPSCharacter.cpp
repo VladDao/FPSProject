@@ -104,7 +104,7 @@ void AFPSCharacter::MoveForward(float Value)
 			AddMovementInput(Direction, Value);
 		}
 		else {
-			AddMovementInput(Direction, Value * 0.45);
+			AddMovementInput(Direction, Value * 0.49);
 		
 		}
 	}
@@ -123,7 +123,7 @@ void AFPSCharacter::MoveRight(float Value)
 			AddMovementInput(Direction, Value);
 		}
 		else {
-			AddMovementInput(Direction, Value * 0.45);
+			AddMovementInput(Direction, Value * 0.49);
 
 		}
 	}
